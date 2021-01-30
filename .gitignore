@@ -1,5 +1,5 @@
 .DS_Store
 
-src/server/node_modules
-src/server/.env
-src/server/package-lock.json
+node_modules
+.env
+package-lock.json
