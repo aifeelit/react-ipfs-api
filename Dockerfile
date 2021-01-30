@@ -19,3 +19,6 @@ EXPOSE 8080
 
 # Running the app
 CMD [ "node", "src/server/app.js" ]
+
+#  If you are running your code for production replace above with
+# CMD [ "npm", "run", "pm2" ]

@@ -1,7 +1,7 @@
 function checkAuth() {
-    return true;
-};
+  return true;
+}
 
 module.exports = {
-    checkAuth
+  checkAuth,
 };
