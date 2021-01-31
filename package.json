@@ -7,7 +7,7 @@
     "pm2": "pm2 start processes.json --no-daemon",
     "test": "jest",
     "start": "node src/server/app.js",
-    "migrate": "node src/server/db/migrate.js",
+    "dev": "nodemon src/server/app.js",
     "eslint-fix": "eslint \"**/*.js\" --fix"
   },
   "author": "",
@@ -18,18 +18,19 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "ipfs-http-client": "^48.2.2",
     "jest": "^26.6.3",
-    "pg": "^8.5.1",
-    "pg-hstore": "^2.3.3",
+    "mongoose": "^5.11.14",
     "pino": "^6.11.0",
     "pino-pretty": "^4.4.0",
     "pm2": "^4.5.2",
-    "sequelize": "^6.5.0"
+    "uuid-apikey": "^1.5.1"
   },
   "devDependencies": {
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   }
 }
