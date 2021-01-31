@@ -1,27 +1,30 @@
 const logger = require('../logger');
 const errors = require('../errors');
-const apiKeys = require('../models').ApiKey;
+const ApiKey = require('../models/apikey');
+const { generateKey } = require('../utils/generator');
 
 exports.getAll = async (req, res) => {
   try {
-    const data = await apiKeys.listAll();
-    return res.json({ data });
+    const data = await ApiKey.find({});
+    const keys = data.map(({ uuid, key, active }) => ({ uuid, key, active }));
+    return res.json({ keys });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
     return res.status(500).send(e);
-  };
+  }
 };
 
 exports.addNew = async (req, res) => {
+  const { uuid, apiKey } = generateKey();
   try {
-    const key = {
-      email: req.body.email,
-      key: 'thisIsSomeSuperApiKey', // @@ todo: look for some hash function here
+    const record = {
+      uuid,
+      key: apiKey,
       active: true,
     };
-    await apiKeys.new(key);
+    await ApiKey.create(record);
     logger.info('Key created correctly.');
-    return res.json({ message: 'Success' });
+    return res.json({ data: record });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
     return res.status(500).send(e);
@@ -30,11 +33,9 @@ exports.addNew = async (req, res) => {
 
 exports.disable = async (req, res) => {
   try {
-    console.log('req body: ', req.body);
+    const { apiKey } = req.body;
 
-    const { apiKey, email } = req.body;
-
-    await apiKeys.disable(email, apiKey);
+    await ApiKey.updateOne({ key: apiKey }, { active: false });
     return res.json({ message: 'Key disabled ' });
   } catch (e) {
     logger.error(`Error: ${e.message}`);

@@ -22,8 +22,11 @@ exports.defaultDatabase = (sequelizeError) => {
   );
 };
 
+exports.EMPTY_TOKEN = 'empty_token';
+exports.emptyToken = () => internalError('No API Token provided.', exports.EMPTY_TOKEN);
+
 exports.INVALID_TOKEN = 'invalid_token';
 exports.invalidToken = () => internalError('The submitted API token is invalid.', exports.INVALID_TOKEN);
 
-exports.DISABLED_TOKEN = 'invalid_token';
+exports.DISABLED_TOKEN = 'disabled_token';
 exports.disabledToken = () => internalError('API Token is disabled.', exports.DISABLED_TOKEN);

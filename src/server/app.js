@@ -1,27 +1,39 @@
 const express = require('express');
-const IPFSClient = require('ipfs-http-client');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+
+const middlewares = require('./middlewares');
 
 const config = require('./config');
 const routes = require('./routes');
+const logger = require('./logger');
 
-const IPFS = new IPFSClient({
-  host: config.IPFS.HOST,
-  port: config.IPFS.PORT,
-  protocol: config.IPFS.PROTOCOL,
-});
+const db = require('./db');
 
-const app = express();
+function init() {
+  const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(fileUpload());
 
-routes.init(app);
+  routes.init(app);
 
-app.get('/', (req, res) => {
-  return res.status(200).send({ message: 'Beep boop' });
-});
+  app.get('/', [middlewares.checkApiKey, middlewares.logFowardedRequest ], async (req, res) => {
+    try {
+      return res.status(200).send({ message: 'Beep boop' });
+    } catch (err) {
+      logger.error(`Error: ${err}`);
+      return res.status(500).send(err.message);
+    }
+  });
 
-app.listen(config.APP.PORT, () => {
-  console.info(`Server listening on port ${config.APP.PORT}`);
-});
+  Promise.resolve().then(() => {
+    return db.initializeConnection().then(() => {
+      app.listen(config.APP.PORT);
+      console.info(`Server listening on port ${config.APP.PORT}`);
+    });
+  });
+}
+
+init();
