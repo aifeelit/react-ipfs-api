@@ -8,13 +8,13 @@ module.exports = {
     PROTOCOL: process.env.IPFS_PROTOCOL || 'http',
   },
   APP: {
-    PORT: process.env.APP_PORT || 8080,
+    PORT: process.env.APP_PORT || 3000,
   },
   DB: {
-    USERNAME: process.env.MONGO_USERNAME || 'fleek',
-    PASSWORD: process.env.MONGO_PASSWORD || 'fleek',
-    HOSTNAME: process.env.MONGO_HOSTNAME || '127.0.0.1',
-    PORT: process.env.MONGO_PORT || '27017',
-    NAME: process.env.MONGO_DB || 'fleek',
+    USERNAME: process.env.MONGO_USERNAME,
+    PASSWORD: process.env.MONGO_PASSWORD,
+    HOSTNAME: process.env.MONGO_HOSTNAME,
+    PORT: process.env.MONGO_PORT,
+    NAME: process.env.MONGO_DB,
   },
 };

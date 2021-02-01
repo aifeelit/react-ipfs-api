@@ -21,7 +21,7 @@ function init() {
 
   app.get('/', [middlewares.checkApiKey, middlewares.logFowardedRequest ], async (req, res) => {
     try {
-      return res.status(200).send({ message: 'Beep boop' });
+      return res.status(200).send({ message: 'Bears beets battlestar galactica' });
     } catch (err) {
       logger.error(`Error: ${err}`);
       return res.status(500).send(err.message);

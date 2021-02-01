@@ -1,5 +1,4 @@
 const logger = require('../logger');
-const errors = require('../errors');
 const ApiKey = require('../models/apikey');
 const { generateKey } = require('../utils/generator');
 
@@ -34,7 +33,6 @@ exports.addNew = async (req, res) => {
 exports.disable = async (req, res) => {
   try {
     const { apiKey } = req.body;
-
     await ApiKey.updateOne({ key: apiKey }, { active: false });
     return res.json({ message: 'Key disabled ' });
   } catch (e) {
