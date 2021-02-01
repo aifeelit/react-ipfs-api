@@ -21,6 +21,8 @@ async function checkApiKey(req, res, next) {
     // All right this is the *most expensive* , but we need to check that the key is not disabled
     const key = await ApiKey.findOne({ key: value }).exec();
 
+    console.log('KEY: ', key);
+
     if (key.active !== true) {
       return next(errors.disabledToken().message);
     }

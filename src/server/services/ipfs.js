@@ -1,37 +1,29 @@
-const fs = require('fs');
-const ipfs = require('../ipfs');
+const IPFS = require('../ipfs');
 const logger = require('../logger');
 
-async function addFile(fileName, filePath) {
-  const file = fs.readFileSync(filePath);
-  const fileAdded = await ipfs.add({ path: fileName, content: file });
-  const fileHash = fileAdded[0].hash;
-  return fileHash;
-}
+const buildPublicGatewayURL = hash => `https://gateway.ipfs.io/ipfs/${hash}`;
 
-exports.upload = async (req, res) => {
+const retrieveHashFromFile = file => {
+  const { cid } = file;
+  const hash = cid.toString();
+  return hash;
+};
+
+async function addFile(name, text){
+  const newFile = { path: name, content: Buffer.from(text) };
+  const filesAdded = await IPFS.add(newFile);
+  return filesAdded;
+};
+
+exports.post = async (req, res) => {
   try {
-    const { file } = req.files;
-    const { fileName } = req.body;
-    const filePath = `files/${fileName}`;
-
-    file.mv(filePath, async (err) => {
-      if (err) {
-        throw err;
-      }
-
-      const fileHash = await addFile(fileName, filePath);
-
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-
-      return res.json({ fileName, fileHash });
-    });
-  } catch (e) {
-    logger.error(`Error: ${e.message}`);
-    return res.status(500).send(e);
+    const { name, text } = req.body;
+    const addedFile = await addFile(name, text);
+    const fileHash = retrieveHashFromFile(addedFile);
+    const link = buildPublicGatewayURL(fileHash);
+    return res.json({ data: link });
+  } catch(error) {
+    logger.error(`Error: ${error}`);
+    return res.status(500).send(error);
   }
 };
