@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "ipfs-proxy",
-            "script": "./src/server/app.js",
+            "script": "./src/app.js",
             "merge_logs": true,
             "max_restarts": 20,
             "instances": 4,
