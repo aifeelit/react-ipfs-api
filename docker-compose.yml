@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+    nodeproxy:
+        build:
+            context: ./node-proxy
+        ports:
+            - "5000:5000"
