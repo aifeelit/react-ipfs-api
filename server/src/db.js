@@ -18,6 +18,7 @@ if (ENVIRONMENT !== 'development') {
 }
 
 async function initializeConnection() {
+  console.log('Initializing connection: ', url);
   return mongoose
     .connect(url, options)
     .then(() => {

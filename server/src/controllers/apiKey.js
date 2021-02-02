@@ -5,7 +5,7 @@ const { generateKey } = require('../utils/generator');
 exports.getAll = async (req, res) => {
   try {
     const data = await ApiKey.find({});
-    const keys = data.map(({ uuid, key, active }) => ({ uuid, key, active }));
+    const keys = data.map(({ key, active }) => ({ key, active }));
     return res.json({ keys });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
@@ -14,10 +14,9 @@ exports.getAll = async (req, res) => {
 };
 
 exports.addNew = async (req, res) => {
-  const { uuid, apiKey } = generateKey();
+  const { apiKey } = generateKey();
   try {
     const record = {
-      uuid,
       key: apiKey,
       active: true,
     };
