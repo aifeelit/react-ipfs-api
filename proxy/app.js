@@ -4,7 +4,7 @@ const logger = require('./logger');
 const { validateAPIKey, logRequest } = require('./utils');
 
 const IPFS_API_URL = process.env.IPFS_API_URL || 'http://127.0.0.1:5001' // default URL that uses the daemon to serve the HTTP API
-const PORT = 5000;
+const PORT = process.env.PROXY_PORT || 5000;
 
 const app = express();
 
