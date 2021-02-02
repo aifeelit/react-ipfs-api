@@ -10,11 +10,4 @@ module.exports = {
   APP: {
     PORT: process.env.APP_PORT || 8080,
   },
-  DB: {
-    USERNAME: process.env.MONGO_USERNAME,
-    PASSWORD: process.env.MONGO_PASSWORD,
-    HOSTNAME: process.env.MONGO_HOSTNAME,
-    PORT: process.env.MONGO_PORT,
-    NAME: process.env.MONGO_DB,
-  },
 };
