@@ -1,10 +1,8 @@
 const logger = require('../logger');
-const Log = require('../models/log');
-const { generateKey } = require('../utils/generator');
 
 exports.getAll = async (req, res) => {
   try {
-    const data = await Log.find({});
+    let data = await redis.keysAsync('log *');
     return res.json({ data });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
