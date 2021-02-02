@@ -7,8 +7,9 @@ exports.init = (app) => {
   app.get('/keys', [], apiKeys.getAll);
   app.post('/keys', [], apiKeys.addNew);
   app.post('/keys/disable', [], apiKeys.disable);
-  // IPFS routes;
-  // app.get('/ipfs', [mw.checkApiKey, mw.logFowardedRequest], ipfs.gateway);
+  // Logs
+  app.get('/logs', [], logs.getAll);
+  // IPFS custom routes;
   app.post('/ipfs', [mw.checkApiKey, mw.logFowardedRequest], ipfs.post);
 
 };
