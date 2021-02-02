@@ -10,7 +10,7 @@ const app = express();
 
 app.use(async function(req, res, next) {
   try {
-    const apiKey = req.headers['x-auth-ipfs'];
+    const apiKey = req.headers['x-ipfs-auth'];
     await validateAPIKey(apiKey);
     await logRequest(apiKey);
     next();

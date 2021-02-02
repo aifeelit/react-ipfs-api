@@ -18,7 +18,8 @@ function validateKey(value) {
 };
 
 async function checkIfActive(value) {
-  let keyIsActive = await redis.getAsync(value);
+  const keyIdentifier = `key ${value}`;
+  let keyIsActive = await redis.getAsync(keyIdentifier);
 
   if (!JSON.parse(keyIsActive)) {
     throw Error('Key is disabled');
@@ -35,7 +36,7 @@ async function validateAPIKey(apiKey) {
 };
 
 async function logRequest(apiKey, headers) {
-  const timestamp = new Date()
+  const timestamp = new Date();
   // Log format should be consistent to the following: Log ApiKey Timestamp RequestHost
   const keyIdentifier = `log ${apiKey} ${timestamp.toISOString()} ${headers.host}`;
   await redis.setAsync(keyIdentifier);
