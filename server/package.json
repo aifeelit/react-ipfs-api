@@ -6,8 +6,8 @@
   "scripts": {
     "pm2": "pm2 start processes.json --no-daemon",
     "test": "jest",
-    "start": "node src/server/app.js",
-    "dev": "nodemon src/server/app.js",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "eslint-fix": "eslint \"**/*.js\" --fix"
   },
   "author": "",

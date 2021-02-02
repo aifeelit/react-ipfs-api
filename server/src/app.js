@@ -19,8 +19,9 @@ function init() {
 
   routes.init(app);
 
-  app.get('/', [middlewares.checkApiKey, middlewares.logFowardedRequest ], async (req, res) => {
+  app.get('/foo', [], async (req, res) => {
     try {
+      console.log('bear beets battlestar galatica');
       return res.status(200).send({ message: 'Bears beets battlestar galactica' });
     } catch (err) {
       logger.error(`Error: ${err}`);
@@ -28,10 +29,19 @@ function init() {
     }
   });
 
+  app.post('/foo', [], async (req, res) => {
+    try {
+      return res.status(200).send({ message: 'POST beets battlestar galactica' });
+    } catch (err) {
+      logger.error(`Error: ${err}`);
+      return res.status(500).send(err.message);
+    }
+  })
+
   Promise.resolve().then(() => {
     return db.initializeConnection().then(() => {
-      app.listen(config.APP.PORT);
-      console.info(`Server listening on port ${config.APP.PORT}`);
+      app.listen(3000);
+      console.info(`Server listening on port ${3000}`);
     });
   });
 }

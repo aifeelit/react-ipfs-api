@@ -8,7 +8,7 @@ module.exports = {
     PROTOCOL: process.env.IPFS_PROTOCOL || 'http',
   },
   APP: {
-    PORT: process.env.APP_PORT || 3000,
+    PORT: process.env.APP_PORT || 8080,
   },
   DB: {
     USERNAME: process.env.MONGO_USERNAME,
