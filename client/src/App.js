@@ -10,12 +10,15 @@ function App() {
   const { token, setToken } = useToken();
 
   if (!token) {
-    return <Login setToken={setToken} />
+    return (
+    <div className="appTheme">
+      <Login setToken={setToken} />
+    </div>
+    )
   }
 
   return (
-    <div className="wrapper">
-      <h1>API Key Dashboard</h1>
+    <div className="appTheme">
       <BrowserRouter>
         <Switch>
           <Route path="/">
