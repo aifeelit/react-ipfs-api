@@ -3,17 +3,17 @@ import { getLogs } from '../../services/api';
 import PropTypes from 'prop-types';
 
 const RowInfo = ({ info }) => {
-  const { timestamp, host } = info;  
+  console.log('INFO: ', info);
+  const { timestamp, bytes } = info;  
   return (
-    <div>
-      <p>{timestamp} || {host}</p>
-      {/* <p>{host}</p> JUSTIFY FLEX HERE PLS*/} 
-    </div>
+    <ul>
+      <p>{timestamp} - Size: {bytes}</p>
+    </ul>
   );
 };
 
 export default function LogsInfo({logs}){
-  return ( 
+  return (
     <div className="logsList">
       {logs.map((log,i) => (<RowInfo key={`_${i}`} info={log}/>))}      
     </div>
