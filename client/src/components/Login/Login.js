@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { loginUser } from '../../services/api';
-import './Login.css';
 
 export default function Login({ setToken }) {
   const [username, setUsername] = useState();
@@ -14,7 +13,7 @@ export default function Login({ setToken }) {
   };
 
   return(
-    <div className="login-wrapper">
+    <div className="login-container">
       <h1>
         Log In
       </h1>
