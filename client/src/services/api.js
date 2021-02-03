@@ -5,16 +5,16 @@ const apiClient = axios.create({
   baseURL: config.NODE_API_URL 
 });
 
-export async function getLogs(id){
+export async function disableAPIKey(id) {
   try {
-    console.log('ID: ', id);
-    const identifier = '';
-    const response = await apiClient.get(`/logs/${identifier}`);
-    console.log('Response: ', response);
+    const response = await apiClient.post('/key/disable', {
+      id
+    });
+    console.log('response: ', response);
     return response.data;
-  } catch(err){
-    console.error(err)
-  }
+  } catch(err) {
+    console.error(err);
+  };
 };
 
 export async function getAPIKeys() {

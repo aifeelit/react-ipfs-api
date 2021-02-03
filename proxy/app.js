@@ -10,9 +10,13 @@ const app = express();
 
 app.use(async function(req, res, next) {
   try {
-    const apiKey = req.headers['x-ipfs-auth'];
+    const { headers } = req;
+    const apiKey = headers['x-ipfs-auth'];
+    if(!apiKey) {
+      throw Error('Need to supply an valid API key with `x-ipfs-auth` header!');
+    }
     await validateAPIKey(apiKey);
-    await logRequest(apiKey);
+    await logRequest(apiKey, headers['content-length']);
     next();
   } catch(err) {
     logger.error(`${err}`);

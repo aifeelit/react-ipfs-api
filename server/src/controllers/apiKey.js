@@ -2,9 +2,26 @@ const logger = require('../logger');
 const redis = require('../services/redis');
 const { generateKey } = require('../utils/generator');
 
+const formatKeysLogsResponse = (keys, logs) => {
+  const keysInfo = {};
+  keys.forEach(info => {
+    [type, id] = info.split(' ');
+    keysInfo[id] = { logs: []};
+  });
+  logs.forEach(log => {
+    [type, id, timestamp, bites] = log.split(' ');
+    if (keysInfo[id]) {
+      keysInfo[id].logs.push({timestamp, bites});
+    }
+  });
+  return keysInfo;
+};
+
 exports.getAll = async (req, res) => {
   try {
-    let data = await redis.keysAsync('key *');
+    let keysData = await redis.keysAsync('key *');
+    let logsData = await redis.keysAsync('log *');
+    const data = formatKeysLogsResponse(keysData, logsData);
     console.log('data: ', data);
     return res.json({ data });
   } catch (e) {
@@ -13,20 +30,10 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.getOne = async (req, res) => {
-  const apiKey = req.headers['x-ipfs-auth'];
-  const keyIdentifier = `key ${apiKey}`;
-  let data = await redis.getAsync(keyIdentifier);
-  data = JSON.parse(data);
-  // console.log('typeof data: ',typeof data);
-  // console.log('DATA: ', data);
-  res.json(data);
-}
-
 exports.addNew = async (req, res) => {
   const { apiKey } = generateKey();
   try {
-    const keyIdentifier = `key ${apiKey} true`;
+    const keyIdentifier = `key ${apiKey}`;
     await redis.setAsync(keyIdentifier, true);
     logger.info('Key created correctly.');
     return res.json({ data: keyIdentifier });
@@ -38,9 +45,13 @@ exports.addNew = async (req, res) => {
 
 exports.disable = async (req, res) => {
   try {
-    const { apiKey } = req.body;
-    await ApiKey.updateOne({ key: apiKey }, { active: false });
-    return res.json({ message: 'Key disabled ' });
+    const { id } = req.body;
+    const keyId = `key ${id}`;
+    const disabledKeyId = `DISABLED ${id}`;
+    console.log('KEY ID: ', keyId);
+    console.log('disabled key Id: ', disabledKeyId);
+    await redis.renameAsync(keyId, disabledKeyId);
+    return res.json({ message: 'Key disabled' });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
     return res.status(500).send(e);

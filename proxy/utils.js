@@ -6,23 +6,29 @@ function isValidKey(apiKey) {
 }
 
 function validateKey(value) {  
-  if (!value) {
-    throw Error('No value provided');
-  }
-  
   if (!isValidKey(value)) {
     throw Error('Key is not valid');
   }
-
   return true;
 };
 
 async function checkIfActive(value) {
-  const keyIdentifier = `key ${value}`;
-  let keyIsActive = await redis.getAsync(keyIdentifier);
 
-  if (!JSON.parse(keyIsActive)) {
-    throw Error('Key is disabled');
+  const disabledIdentifier = `DISABLED ${value}`;
+  let isDisabled = await redis.getAsync(disabledIdentifier);
+  console.log('is Disabled: ', isDisabled);
+
+  if (JSON.parse(isDisabled)) {
+    throw Error('Key is disabled >:(');
+  }
+  
+  const keyIdentifier = `key ${value}`;
+  let isActive = await redis.getAsync(keyIdentifier);
+  // If its null, means key does not exist;
+  console.log('isActive: ', isActive);
+
+  if (!JSON.parse(isActive)) {
+    throw Error('Key does not exist');
   }
 
   return true;
@@ -35,11 +41,12 @@ async function validateAPIKey(apiKey) {
   return isValid && isActive;
 };
 
-async function logRequest(apiKey, headers) {
+async function logRequest(apiKey, contentHeader) {
   const timestamp = new Date();
   // Log format should be consistent to the following: Log ApiKey Timestamp RequestHost
-  const keyIdentifier = `log ${apiKey} ${timestamp.toISOString()} ${headers.host}`;
-  await redis.setAsync(keyIdentifier);
+  console.log('headers: ', contentHeader);
+  const keyIdentifier = `log ${apiKey} ${timestamp.toISOString()} ${contentHeader}`;
+  await redis.setAsync(keyIdentifier, true);
 };
 
 module.exports = {

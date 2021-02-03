@@ -15,7 +15,6 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const response = await getAPIKeys();
-      console.log('response: ', response);
       setData(response);
     })();
   }, []);

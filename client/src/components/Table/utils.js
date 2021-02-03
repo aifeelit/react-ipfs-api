@@ -1,4 +1,4 @@
-export const columnsHeaders = ['Key ID', 'Status', 'Info', 'Disable'];
+export const columnsHeaders = ['Key ID', 'Info', 'Disable'];
 
 export function formatKeysData(data){
   const formatted = Object.entries(data).map(([key, data]) => {
