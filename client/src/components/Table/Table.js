@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from '../Modal';
 import LogsInfo from '../LogsInfo';
-import { getAPIKeys } from '../../services/api';
+import { getAPIKeys, disableAPIKey } from '../../services/api';
 import { formatKeysData, columnsHeaders } from './utils';
 export default class Table extends Component{
   constructor() {
@@ -31,6 +31,15 @@ export default class Table extends Component{
       this.setState({ show: false });
     };
 
+    disableKey = ev => {
+      const keyID = ev.currentTarget.value;
+      disableAPIKey(keyID).then(() => {
+        let updatedKeys = [...this.state.data];
+        updatedKeys = updatedKeys.filter(key => key.id !== keyID);
+        this.setState({ data: updatedKeys });
+      });
+    }
+
   render() {
     const { error, isLoaded, data } = this.state;
     if (error) {
@@ -44,16 +53,15 @@ export default class Table extends Component{
           <tr>
             {columnsHeaders.map((header,i) => (
             <th key={`_${i}`}>
-              {header}
+              {`${header}`}
             </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {isLoaded ? data.map(({id, status, logs}, i) => (
+          {isLoaded ? data.map(({id, _status, logs}, i) => (
             <tr className="flex justify-between">
               <td>{`${id}`}</td>
-              <td>{`${status}`}</td>
               <td>
                 <Modal show={this.state.show} handleClose={this.hideModal}>
                   <LogsInfo logs={logs}/>
@@ -63,7 +71,7 @@ export default class Table extends Component{
                 </button>
               </td>
               <td>
-                <button type="button">
+                <button type="button" value={id} onClick={this.disableKey}>
                   <span role="img" aria-label="cross">❌</span>
                 </button>
               </td>
