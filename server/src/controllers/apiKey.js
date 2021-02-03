@@ -9,9 +9,9 @@ const formatKeysLogsResponse = (keys, logs) => {
     keysInfo[id] = { logs: []};
   });
   logs.forEach(log => {
-    [type, id, timestamp, bites] = log.split(' ');
+    [type, id, timestamp, bytes] = log.split(' ');
     if (keysInfo[id]) {
-      keysInfo[id].logs.push({timestamp, bites});
+      keysInfo[id].logs.push({timestamp, bytes});
     }
   });
   return keysInfo;
