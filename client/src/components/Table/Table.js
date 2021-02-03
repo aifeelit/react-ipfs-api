@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import Modal from '../Modal';
-
-const columns = ['Key ID', 'Status', 'Info', 'Disable'];
-
+import LogsInfo from '../LogsInfo';
+import { getAPIKeys } from '../../services/api';
+import { formatKeysData, columnsHeaders } from './utils';
 export default class Table extends Component{
   constructor() {
     super();
     this.state = {
+      error: null,
+      isLoaded: false,
+      data: [],
       show: false
     };
       this.showModal = this.showModal.bind(this);
       this.hideModal = this.hideModal.bind(this);
+    }
+
+    componentDidMount() {
+        getAPIKeys().then(({ data }) => {
+          const keysData = formatKeysData(data);
+          this.setState({ data: keysData, isLoaded: true });
+        }).catch(error => this.setState({ isLoaded: true, error }));  
     }
 
     showModal = () => {
@@ -22,13 +32,17 @@ export default class Table extends Component{
     };
 
   render() {
-    const { data } = this.props;
+    const { error, isLoaded, data } = this.state;
+    if (error) {
+      return (<div>Error: {error.message}</div>)
+    };
+    
     return (
     <div>
       <table>
         <thead>
           <tr>
-            {columns.map((header,i) => (
+            {columnsHeaders.map((header,i) => (
             <th key={`_${i}`}>
               {header}
             </th>
@@ -36,14 +50,13 @@ export default class Table extends Component{
           </tr>
         </thead>
         <tbody>
-          {data.map(({key, isActive}, i) => (
-
+          {isLoaded ? data.map(({id, status, logs}, i) => (
             <tr className="flex justify-between">
-              <td>{`${key}`}</td>
-              <td>{`${isActive}`}</td>
+              <td>{`${id}`}</td>
+              <td>{`${status}`}</td>
               <td>
                 <Modal show={this.state.show} handleClose={this.hideModal}>
-                  <p>Key Info</p>
+                  <LogsInfo logs={logs}/>
                 </Modal>
                 <button type="button" onClick={this.showModal}>
                   <span role="img" aria-label="search-icon">🔎</span>
@@ -55,7 +68,7 @@ export default class Table extends Component{
                 </button>
               </td>
             </tr>
-          ))}
+          )) : <div>Loading data...</div>}
         </tbody>
       </table>
     </div>
