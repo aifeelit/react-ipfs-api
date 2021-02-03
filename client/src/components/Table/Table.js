@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Modal from '../Modal';
 import LogsInfo from '../LogsInfo';
 import { getAPIKeys, disableAPIKey } from '../../services/api';
 import { formatKeysData, columnsHeaders } from './utils';
@@ -60,15 +59,10 @@ export default class Table extends Component{
         </thead>
         <tbody>
           {isLoaded ? data.map(({id, _status, logs}, i) => (
-            <tr className="flex justify-between">
+            <tr key={`_${i}`} className="flex justify-between">
               <td>{`${id}`}</td>
               <td>
-                <Modal show={this.state.show} handleClose={this.hideModal}>
-                  <LogsInfo logs={logs}/>
-                </Modal>
-                <button type="button" onClick={this.showModal}>
-                  <span role="img" aria-label="search-icon">🔎</span>
-                </button>
+                <LogsInfo logs={logs}/>
               </td>
               <td>
                 <button type="button" value={id} onClick={this.disableKey}>
