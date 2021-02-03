@@ -1,11 +1,13 @@
 import './App.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
+import Home from './views/Home';
 import Login from './components/Login';
+import useToken from './utils';
 
 function App() {
-  const [token, setToken] = useState();
+
+  const { token, setToken } = useToken();
 
   if (!token) {
     return <Login setToken={setToken} />
@@ -16,8 +18,8 @@ function App() {
       <h1>API Key Dashboard</h1>
       <BrowserRouter>
         <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </BrowserRouter>
