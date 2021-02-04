@@ -1,6 +1,9 @@
 const redis = require("redis");
+const config = require('../config');
 const { promisify } = require("util");
-const client = redis.createClient();
+const client = redis.createClient({
+  port: config.REDIS_PORT
+});
 
 module.exports = {
     ...client,

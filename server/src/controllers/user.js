@@ -5,7 +5,6 @@
  * (And *absolutely* not store the token in a plain string, that should be a process.env.SECRET)
  */
 exports.logIn = (req, res, next) => {
-  console.log('login!');
   const token = 'BearBeetsBattlestarGalactica';
   return res.json({ token });
 };
