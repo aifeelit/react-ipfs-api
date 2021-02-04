@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LogsInfo from '../LogsInfo';
-import { getAPIKeys, disableAPIKey } from '../../services/api';
+import { getAPIKeys, disableAPIKey, createAPIKey } from '../../services/api';
 import { formatKeysData, columnsHeaders } from './utils';
 export default class Table extends Component{
   constructor() {
@@ -39,6 +39,15 @@ export default class Table extends Component{
       });
     }
 
+    createKey = () => {
+      createAPIKey().then(response => {
+        const [type, id] = response.data.split(' ');
+        const newKey = { id, logs: []};
+        const updatedKeys = [newKey, ...this.state.data];
+        this.setState({ data: updatedKeys });
+      });
+    };
+
   render() {
     const { error, isLoaded, data } = this.state;
     if (error) {
@@ -46,7 +55,13 @@ export default class Table extends Component{
     };
     
     return (
-    <div>
+      <div>
+        <div>
+          <button type="button" onClick={this.createKey}>
+            <span role="img" aria-label="new">Create key</span>
+          </button>
+        </div>
+        <div>
       <table>
         <thead>
           <tr>
@@ -74,6 +89,7 @@ export default class Table extends Component{
         </tbody>
       </table>
     </div>
+  </div>
     );
   }
 }
