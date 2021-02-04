@@ -24,6 +24,16 @@ If everything went well, we should have our environment ready to go.
 
 ## Some notes
 
+- With the provided default .env.samples, Proxy should be running @ 5000, Server @ 8080, and Client App @ 3000.
+
+- To get an API Key, you should create an API Key from the client (or do a `POST` request to the server's '/key' endpoint.
+
+- Once you have the API Key, you can send a request to the proxy server, which will foward it to the IPFS HTTP API (which is exposed @ Port 5001). 
+
+- A log will be saved on such request, you'll be able to verify this on the client app.
+
+- Creating/Disabling keys can be done through the client.
+
 - For the log in, there's no validation required on the form, so any email/password should be good.
 
 # Written questions
