@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './Panel.css';
 import React, { Component } from 'react';
 import LogsInfo from '../../components/LogsInfo';
