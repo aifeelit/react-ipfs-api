@@ -9,7 +9,7 @@ exports.init = (app) => {
   // Api Keys routes;
   // app.get('/key', apiKeys.getOne); for testing
 
-  app.post('/key', [], apiKeys.addNew);
-  app.post('/key/disable', [], apiKeys.disable);
-  app.get('/keys', [], apiKeys.getAll);
+  app.post('/key', [mw.checkAuth], apiKeys.addNew);
+  app.post('/key/disable', [mw.checkAuth], apiKeys.disable);
+  app.get('/keys', [mw.checkAuth], apiKeys.getAll);
 };
