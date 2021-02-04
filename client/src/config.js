@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const ENVIRONMENT = process.env.ENVIRONMENT || 'development';
 
 module.exports = {
