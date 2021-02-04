@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import { getLogs } from '../../services/api';
-import PropTypes from 'prop-types';
+import './LogsInfo.css';
+import React from 'react';
 
 const RowInfo = ({ info }) => {
   const { timestamp, bytes } = info;  
   return (
-    <ul>
-      <p>{timestamp} - Size: {bytes}</p>
-    </ul>
+      <p className="p-logs">{`Date: ${timestamp} - Size: ${bytes}`}</p>
   );
 };
 
 export default function LogsInfo({logs}){
   return (
-    <div className="logsList">
+    <div className="logs-list">
       {logs.map((log,i) => (<RowInfo key={`_${i}`} info={log}/>))}      
     </div>
   );
