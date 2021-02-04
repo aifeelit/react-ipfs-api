@@ -22,7 +22,6 @@ exports.getAll = async (req, res) => {
     let keysData = await redis.keysAsync('key *');
     let logsData = await redis.keysAsync('log *');
     const data = formatKeysLogsResponse(keysData, logsData);
-    console.log('data: ', data);
     return res.json({ data });
   } catch (e) {
     logger.error(`Error: ${e.message}`);
@@ -48,8 +47,6 @@ exports.disable = async (req, res) => {
     const { id } = req.body;
     const keyId = `key ${id}`;
     const disabledKeyId = `DISABLED ${id}`;
-    console.log('KEY ID: ', keyId);
-    console.log('disabled key Id: ', disabledKeyId);
     await redis.renameAsync(keyId, disabledKeyId);
     return res.json({ message: 'Key disabled' });
   } catch (e) {
