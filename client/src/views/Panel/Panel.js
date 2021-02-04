@@ -1,9 +1,10 @@
-import './Table.css';
+import './Panel.css';
 import React, { Component } from 'react';
-import LogsInfo from '../LogsInfo';
+import LogsInfo from '../../components/LogsInfo';
 import { getAPIKeys, disableAPIKey, createAPIKey } from '../../services/api';
 import { formatKeysData, columnsHeaders } from './utils';
-export default class Table extends Component{
+
+export default class Panel extends Component  {
   constructor() {
     super();
     this.state = {
