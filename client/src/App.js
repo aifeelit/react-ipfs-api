@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './views/Home';
-import Login from './components/Login';
+import Login from './views/Login';
 import useToken from './utils';
 
 function App() {

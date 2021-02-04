@@ -1,0 +1,14 @@
+.create-button {
+  background-color: #4CAF50;
+  border-radius: 5px;
+  padding: 8px 14px;
+  font-size: 18px;
+  color: white;
+}
+.create-button-container {
+  margin-bottom: 20px;
+};
+
+.table-headers-container {
+  margin-bottom: 4px;
+}
