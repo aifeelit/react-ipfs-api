@@ -6,9 +6,25 @@
   color: white;
 }
 .create-button-container {
-  margin-bottom: 20px;
+  margin: 20px;
 };
 
 .table-headers-container {
   margin-bottom: 4px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 40px 20px;
+}
+
+.tr-row {
+  border: 1px solid white;
+}
+
+.td-row {
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
 }

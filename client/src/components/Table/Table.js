@@ -62,8 +62,7 @@ export default class Table extends Component{
             <span role="img" aria-label="new">Create key</span>
           </button>
         </div>
-        <div>
-          <table className="custom-table">
+        <table className="custom-table">
           <thead>
             <tr className="table-headers-container">
               {columnsHeaders.map((header,i) => (
@@ -73,14 +72,14 @@ export default class Table extends Component{
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="table-body">
             {isLoaded ? data.map(({id, _status, logs}, i) => (
-              <tr key={`_${i}`}>
-                <td>{`${id}`}</td>
-                <td>
+              <tr className="tr-row" key={`_${i}`}>
+                <td className="td-row">{`${id}`}</td>
+                <td className="td-row">
                   <LogsInfo logs={logs}/>
                 </td>
-                <td>
+                <td className="td-row">
                   <button type="button" value={id} onClick={this.disableKey}>
                     <span role="img" aria-label="cross">❌</span>
                   </button>
@@ -89,8 +88,7 @@ export default class Table extends Component{
             )) : <div>Loading data...</div>}
           </tbody>
         </table>
-    </div>
-  </div>
+      </div>
     );
   }
 }
