@@ -3,7 +3,6 @@ import { getLogs } from '../../services/api';
 import PropTypes from 'prop-types';
 
 const RowInfo = ({ info }) => {
-  console.log('INFO: ', info);
   const { timestamp, bytes } = info;  
   return (
     <ul>
