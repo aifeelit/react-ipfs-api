@@ -1,8 +1,6 @@
-# F.S Engineer assignment 🚀
-
 ## **Getting started**
 
-There are a few thing that you need to get going on this. It isn't too bad, but it will take a few minutes.
+There are a few thing that you need to get going on this.
 
 Please get sure to have the following installed:
 
